@@ -4,68 +4,127 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo 'Task: Compile and package the code using Maven'
+                echo 'Stage 1: Build - Build the code using Maven'
                 echo 'Tool: Apache Maven'
+                // Actual build commands with Maven
+            }
+            post {
+                success {
+                    echo 'Build successful!'
+                }
+                failure {
+                    echo 'Build failed!'
+                }
             }
         }
         
         stage('Unit and Integration Tests') {
             steps {
-                echo 'Task: Execute unit tests using JUnit/TestNG'
-                echo 'Task: Run integration tests using Selenium/Postman'
-                echo 'Tools: JUnit, TestNG (for unit tests), Selenium, Postman (for integration tests)'
+                echo 'Stage 2: Unit and Integration Tests - Run unit and integration tests'
+                echo 'Tools: JUnit, TestNG, Selenium, Postman'
+                // Actual commands for running unit and integration tests
+            }
+            post {
+                success {
+                    echo 'Unit and Integration Tests passed successfully!'
+                }
+                failure {
+                    echo 'Unit and Integration Tests failed!'
+                }
             }
         }
         
         stage('Code Analysis') {
             steps {
-                echo 'Task: Perform code analysis using SonarQube'
+                echo 'Stage 3: Code Analysis - Perform code analysis using SonarQube'
                 echo 'Tool: SonarQube'
-                echo 'Additional configurations and tools required'
+                // Actual commands for code analysis with SonarQube
+            }
+            post {
+                success {
+                    echo 'Code Analysis passed successfully!'
+                }
+                failure {
+                    echo 'Code Analysis failed!'
+                }
             }
         }
         
         stage('Security Scan') {
             steps {
-                echo 'Task: Perform security scan using OWASP Dependency-Check'
+                echo 'Stage 4: Security Scan - Perform security scan using OWASP Dependency-Check'
                 echo 'Tool: OWASP Dependency-Check'
-                echo 'Additional configurations and tools required'
+                // Actual commands for security scan
+            }
+            post {
+                always {
+                    // echo 'Security Scan passed successfully!'
+                    script {
+                        mail to: 's223519971@deakin.edu.au',
+                             subject: 'Security Scan Status: Success',
+                             body: 'The security scan stage passed successfully. Build log is attached.',
+                             attachments: 'build.log'
+                   
+                    }
+                }
             }
         }
         
         stage('Deploy to Staging') {
             steps {
-                echo 'Task: Deploy application to staging environment'
+                echo 'Stage 5: Deploy to Staging - Deploy the application to a staging server'
                 echo 'Tools: Jenkins Pipeline Scripting with SSH, Docker, AWS Elastic Beanstalk, Kubernetes'
-                echo 'Additional configurations and tools required'
+                // Actual commands for deployment to staging
+            }
+            post {
+                success {
+                    echo 'Deployment to Staging successful!'
+                }
+                failure {
+                    echo 'Deployment to Staging failed!'
+                }
             }
         }
         
         stage('Integration Tests on Staging') {
             steps {
-                echo 'Task: Run integration tests on the staging environment'
+                echo 'Stage 6: Integration Tests on Staging - Run integration tests on staging environment'
                 echo 'Tools: Selenium, Postman, JMeter'
-                echo 'Additional configurations and tools required'
+                // Actual commands for running integration tests on staging
+            }
+            post {
+                success {
+                    echo 'Integration Tests on Staging passed successfully!'
+                }
+                failure {
+                    echo 'Integration Tests on Staging failed!'
+                }
             }
         }
         
         stage('Deploy to Production') {
             steps {
-                echo 'Task: Deploy application to production environment'
+                echo 'Stage 7: Deploy to Production - Deploy the application to a production server'
                 echo 'Tools: Jenkins Pipeline Scripting with SSH, Docker, AWS Elastic Beanstalk, Kubernetes'
-                echo 'Additional configurations and tools required'
+                // Actual commands for deployment to production
+            }
+            post {
+                success {
+                    echo 'Deployment to Production successful!'
+                }
+                failure {
+                    echo 'Deployment to Production failed!'
+                }
             }
         }
     }
     
     post {
         success {
-            echo 'Send success notification email'
-            // Email notifications configuration required
+            echo 'Pipeline execution successful!'
         }
         failure {
-            echo 'Send failure notification email'
-            // Email notifications configuration required
+            echo 'Pipeline execution failed!'
         }
     }
 }
