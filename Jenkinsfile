@@ -60,7 +60,7 @@ pipeline {
                 always {
                     // echo 'Security Scan passed successfully!'
                     script {
-                        mail to: 's223519971@deakin.edu.au',
+                        mail to: 'rosemaryjoy97@gmail.com',
                              subject: 'Security Scan Status: Success',
                              body: 'The security scan stage passed successfully. Build log is attached.',
                              attachments: 'build.log'
