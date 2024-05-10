@@ -58,13 +58,10 @@ pipeline {
             }
             post {
                 always {
-                    // echo 'Security Scan passed successfully!'
                     script {
-                        mail to: 'rosemaryjoy97@gmail.com',
+                        mail to: 's223519971@deakin.edu.au',
                              subject: 'Security Scan Status: Success',
-                             body: 'The security scan stage passed successfully. Build log is attached.',
-                             attachments: 'build.log'
-                   
+                             body: 'The security scan stage passed successfully. Build log is attached.'
                     }
                 }
             }
@@ -121,10 +118,14 @@ pipeline {
     
     post {
         success {
-            echo 'Pipeline execution successful!'
+            mail to: 'rosemaryjoy97@gmail.com',
+                 subject: "Pipeline Success: ${currentBuild.fullDisplayName}",
+                 body: "The pipeline ${currentBuild.fullDisplayName} has succeeded."
         }
         failure {
-            echo 'Pipeline execution failed!'
+            mail to: 'rosemaryjoy97@gmail.com',
+                 subject: "Pipeline Failure: ${currentBuild.fullDisplayName}",
+                 body: "The pipeline ${currentBuild.fullDisplayName} has failed. Please check logs."
         }
     }
 }
