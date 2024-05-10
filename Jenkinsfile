@@ -26,11 +26,15 @@ pipeline {
             }
             post {
                 success {
-                    echo 'Unit and Integration Tests passed successfully!'
-                }
-                failure {
-                    echo 'Unit and Integration Tests failed!'
-                }
+            mail to: 'rosemaryjoy97@gmail.com',
+                 subject: "Test Success",
+                 body: "The Unit and Integration Tests stage  of pipeline ${currentBuild.fullDisplayName} has succeeded."
+        }
+        failure {
+            mail to: 'rosemaryjoy97@gmail.com',
+                 subject: "Test Failure",
+                 body: "The Unit and Integration Tests stage of pipeline ${currentBuild.fullDisplayName} has failed. Please check logs."
+        }
             }
         }
         
@@ -57,13 +61,16 @@ pipeline {
                 // Actual commands for security scan
             }
             post {
-                always {
-                    script {
-                        mail to: 's223519971@deakin.edu.au',
-                             subject: 'Security Scan Status: Success',
-                             body: 'The security scan stage passed successfully. Build log is attached.'
-                    }
-                }
+                success {
+            mail to: 'rosemaryjoy97@gmail.com',
+                 subject: "Security Scan Success",
+                 body: "The Security Scan stage  of pipeline ${currentBuild.fullDisplayName} has succeeded."
+        }
+        failure {
+            mail to: 'rosemaryjoy97@gmail.com',
+                 subject: "Security scan Failure",
+                 body: "The Security Scan stage of pipeline ${currentBuild.fullDisplayName} has failed. Please check logs."
+        }
             }
         }
         
